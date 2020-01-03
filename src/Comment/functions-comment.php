@@ -6,7 +6,7 @@
  *
  * @package   HybridCore
  * @author    Justin Tadlock <justintadlock@gmail.com>
- * @copyright Copyright (c) 2008 - 2018, Justin Tadlock
+ * @copyright Copyright (c) 2008 - 2019, Justin Tadlock
  * @link      https://themehybrid.com/hybrid-core
  * @license   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
@@ -68,10 +68,57 @@ function render_author( array $args = [] ) {
 	$html = sprintf(
 		'<span class="%s">%s</span>',
 		esc_attr( $args['class'] ),
-		get_comment_author_link()
+		sprintf( $args['text'], get_comment_author_link() )
 	);
 
 	return apply_filters( 'hybrid/comment/author', $args['before'] . $html . $args['after'] );
+}
+
+/**
+ * Displays the comment author link HTML.
+ *
+ * @since  5.2.0
+ * @access public
+ * @param  array   $args
+ * @return void
+ */
+function display_author_link( array $args = [] ) {
+
+	echo render_author_link( $args );
+}
+
+/**
+ * Returns the comment author link HTML.
+ *
+ * @since  5.2.0
+ * @access public
+ * @param  array   $args
+ * @return string
+ */
+function render_author_link( array $args = [] ) {
+
+	$args = wp_parse_args( $args, [
+		'text'   => '%s',
+		'class'  => 'comment__author-link',
+		'before' => '',
+		'after'  => ''
+	] );
+
+	$comment = get_comment();
+	$url     = get_comment_author_url( $comment );
+	$author  = get_comment_author( $comment );
+	$html    = sprintf( $args['text'], esc_html( $author ) );
+
+	if ( $url && 'http://' !== $url ) {
+		$html = sprintf(
+			'<a href="%s" class="%s" rel="external nofollow">%s</a>',
+			esc_url( $url ),
+			esc_attr( $args['class'] ),
+			$html
+		);
+	}
+
+	return apply_filters( 'hybrid/comment/author/link', $args['before'] . $html . $args['after'] );
 }
 
 /**
@@ -299,14 +346,21 @@ function render_reply_link( array $args = [] ) {
 
 	unset( $args['before'], $args['after'] );
 
-	$html = preg_replace(
-		"/class=(['\"]).+?(['\"])/i",
-		'class=$1' . esc_attr( $args['class'] ) . ' comment-reply-link$2',
-		get_comment_reply_link( $args ),
-		1
-	);
+	$html = get_comment_reply_link( $args );
 
-	return apply_filters( 'hybrid/comment/reply_link', $before . $html . $after );
+	if ( $html ) {
+
+		$html = preg_replace(
+			"/class=(['\"]).+?(['\"])/i",
+			'class=$1' . esc_attr( $args['class'] ) . ' comment-reply-link$2',
+			$html,
+			1
+		);
+
+		$html = $before . $html . $after;
+	}
+
+	return apply_filters( 'hybrid/comment/reply_link', $html );
 }
 
 /**

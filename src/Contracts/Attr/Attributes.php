@@ -8,7 +8,7 @@
  *
  * @package   HybridCore
  * @author    Justin Tadlock <justintadlock@gmail.com>
- * @copyright Copyright (c) 2008 - 2018, Justin Tadlock
+ * @copyright Copyright (c) 2008 - 2019, Justin Tadlock
  * @link      https://themehybrid.com/hybrid-core
  * @license   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
@@ -45,4 +45,15 @@ interface Attributes extends Renderable, Displayable {
 	 * @return string
 	 */
 	public function get( $name );
+
+	/**
+	 * Adds custom data to the attribute object.
+	 *
+	 * @since  5.2.0
+	 * @access public
+	 * @param  string|array  $name
+	 * @param  mixed         $value
+	 * @return $this
+	 */
+	public function with( $key, $value = null );
 }

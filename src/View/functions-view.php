@@ -6,14 +6,14 @@
  *
  * @package   HybridCore
  * @author    Justin Tadlock <justintadlock@gmail.com>
- * @copyright Copyright (c) 2008 - 2018, Justin Tadlock
+ * @copyright Copyright (c) 2008 - 2019, Justin Tadlock
  * @link      https://themehybrid.com/hybrid-core
  * @license   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 namespace Hybrid\View;
 
-use Hybrid\Contracts\View\View;
+use Hybrid\Contracts\View\Engine;
 use Hybrid\Proxies\App;
 use Hybrid\Tools\Collection;
 
@@ -29,11 +29,7 @@ use Hybrid\Tools\Collection;
  */
 function view( $name, $slugs = [], $data = [] ) {
 
-	if ( ! $data instanceof Collection ) {
-		$data = new Collection( $data );
-	}
-
-	return App::resolve( View::class, compact( 'name', 'slugs', 'data' ) );
+	return App::resolve( Engine::class )->view( $name, $slugs, $data );
 }
 
 /**

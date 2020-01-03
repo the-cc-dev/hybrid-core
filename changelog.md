@@ -2,6 +2,44 @@
 
 You can see the changes made via the [commit log](https://github.com/justintadlock/hybrid-core/commits/master) for the latest release.
 
+## [5.2.0] - 2019-09-03
+
+### Added
+
+- New `Hybrid\Attr\Attr\with()` method for passing data into the attributes system.
+- Above `with()` method will auto-handle a `'post'` parameter of `WP_Post` for post attributes.
+- New `Hybrid\Comment\render_author_link()` and `display_author_link()` function.
+
+### Changed
+
+- `.sticky` class renamed to `.is-sticky`.
+
+## [5.1.0] - 2019-07-16
+
+### Added
+
+- New `Hybrid\View\Engine` wrapper class for the view system, which gets passed to view templates as the `$engine` variable.
+- The `View` instances gets passed to view templates as the `$view` variable.
+
+## [5.0.3] - 2019-06-16
+
+### Changed
+
+- The `Template` class should not have a defined `$subtype` by default. Any templates registered should work with all subtypes (post types in most cases) unless otherwise specified.
+
+## [5.0.2] - 2019-04-04
+
+### Added
+
+- New `link` argument to enable/disable the link for `Hybrid\Post\render_author()`.
+
+### Fixed
+
+- Corrected misspelling of `archive` in the `hybrid/archive/title` hook.
+- Use `get_comments_number_text()` instead of `get_comments_number()` to get appropriate comments text.
+- Added the missing `.wp-embed-responsive` body class if supported.
+- Make sure to show `$before` and `$after` args for the comment reply link if there's a link.
+
 ## [5.0.1] - 2018-12-11
 
 ### Fixed

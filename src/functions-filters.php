@@ -8,7 +8,7 @@
  *
  * @package   HybridCore
  * @author    Justin Tadlock <justintadlock@gmail.com>
- * @copyright Copyright (c) 2008 - 2018, Justin Tadlock
+ * @copyright Copyright (c) 2008 - 2019, Justin Tadlock
  * @link      https://themehybrid.com/hybrid-core
  * @license   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
@@ -140,7 +140,7 @@ function document_title_parts( $doctitle ) {
  */
 function archive_title_filter( $title ) {
 
-	return apply_filters( 'hybrid/achive/title', Title::current() );
+	return apply_filters( 'hybrid/archive/title', Title::current() );
 }
 
 /**
@@ -712,6 +712,11 @@ function body_class_filter( $classes, $class ) {
 		$classes[] = 'wp-custom-logo';
 	}
 
+	// Add the `.wp-embed-responsive` class if the theme supports it.
+	if ( current_theme_supports( 'responsive-embeds' ) ) {
+		$classes[] = 'wp-embed-responsive';
+	}
+
 	// Add the '.display-header-text' class if the user chose to display it.
 	if ( display_header_text() ) {
 		$classes[] = 'display-header-text';
@@ -790,7 +795,7 @@ function post_class_filter( $classes, $class, $post_id ) {
 
 	// Sticky posts.
 	if ( is_home() && ! is_paged() && is_sticky( $post_id ) ) {
-		$classes[] = 'sticky';
+		$classes[] = 'is-sticky';
 	}
 
 	// Password-protected posts.

@@ -9,7 +9,7 @@
  *
  * @package   HybridCore
  * @author    Justin Tadlock <justintadlock@gmail.com>
- * @copyright Copyright (c) 2008 - 2018, Justin Tadlock
+ * @copyright Copyright (c) 2008 - 2019, Justin Tadlock
  * @link      https://themehybrid.com/hybrid-core
  * @license   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
@@ -17,7 +17,8 @@
 namespace Hybrid\View;
 
 use Hybrid\Tools\ServiceProvider;
-use Hybrid\Contracts\View\View as ViewContract;
+use Hybrid\Contracts\View\Engine as EngineContract;
+use Hybrid\Contracts\View\View   as ViewContract;
 
 /**
  * View provider class.
@@ -36,8 +37,14 @@ class ViewServiceProvider extends ServiceProvider {
 	 */
 	public function register() {
 
+		// Bind the view contract.
 		$this->app->bind( ViewContract::class, View::class );
 
-		$this->app->alias( ViewContract::class, 'view' );
+		// Bind a single instance of the engine contract.
+		$this->app->singleton( EngineContract::class, Engine::class );
+
+		// Create aliases for the view and engine.
+		$this->app->alias( ViewContract::class,   'view'        );
+		$this->app->alias( EngineContract::class, 'view/engine' );
 	}
 }

@@ -7,7 +7,7 @@
  *
  * @package   HybridCore
  * @author    Justin Tadlock <justintadlock@gmail.com>
- * @copyright Copyright (c) 2008 - 2018, Justin Tadlock
+ * @copyright Copyright (c) 2008 - 2019, Justin Tadlock
  * @link      https://themehybrid.com/hybrid-core
  * @license   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
@@ -24,6 +24,15 @@ use Hybrid\Contracts\Displayable;
  * @access public
  */
 interface View extends Renderable, Displayable {
+
+	/**
+	 * Returns the array of slugs.
+	 *
+	 * @since  5.1.0
+	 * @access public
+	 * @return array
+	 */
+	public function slugs();
 
 	/**
 	 * Returns the absolute path to the template file.
